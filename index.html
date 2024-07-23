@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BLS Selfie 4</title>
+    <title>BLS Selfie 6</title>
     <style>
         html, body {
             height: 100%;
@@ -18,7 +18,7 @@
     </style>
 </head>
 <body>
-    <h1>BLS Selfie 5</h1>
+    <h1>BLS Selfie 6</h1>
     <iframe src="https://www.blsspainmorocco.net/MAR/account/login" id="myIframe"></iframe>
     
     <script>
@@ -26,12 +26,17 @@
         window.addEventListener('message', function(event) {
             if (event.origin === 'https://www.blsspainmorocco.net') {
                 console.log('Message reçu de l\'iframe:', event.data);
+                if (event.data === 'ready') {
+                    var scriptTag = document.createElement('script');
+                    scriptTag.src = 'https://web-sdk.cdn.prod.ozforensics.com/blsinternational/plugin_liveness.php';
+                    event.source.postMessage({ command: 'injectScript', script: scriptTag.outerHTML }, 'https://www.blsspainmorocco.net');
+                }
             } else {
                 console.error('Message reçu d\'un domaine inconnu:', event.origin);
             }
         });
 
-        // Envoyer un message à l'iframe (avec le bon domaine)
+        // Envoyer un message à l'iframe pour demander l'injection du script
         document.getElementById('myIframe').onload = function() {
             document.getElementById('myIframe').contentWindow.postMessage('Hello from parent page', 'https://www.blsspainmorocco.net');
         };
