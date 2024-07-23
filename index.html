@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BLS Selfie 6</title>
+    <title>BLS Selfie 4</title>
     <style>
-        /* Styles pour s'assurer que l'iframe occupe toute la page */
         html, body {
             height: 100%;
             margin: 0;
@@ -19,20 +18,23 @@
     </style>
 </head>
 <body>
-    <h1>BLS Selfie 4</h1>
+    <h1>BLS Selfie 5</h1>
     <iframe src="https://www.blsspainmorocco.net/MAR/account/login" id="myIframe"></iframe>
     
     <script>
-        // Exemple de script qui peut interagir avec l'iframe
+        // Écoute des messages provenant de l'iframe
         window.addEventListener('message', function(event) {
-            // Assurez-vous que le message provient du domaine attendu
             if (event.origin === 'https://www.blsspainmorocco.net') {
                 console.log('Message reçu de l\'iframe:', event.data);
+            } else {
+                console.error('Message reçu d\'un domaine inconnu:', event.origin);
             }
         });
 
-        // Envoyer un message à l'iframe (si vous avez le contrôle du contenu de l'iframe)
-        document.getElementById('myIframe').contentWindow.postMessage('Hello from parent page', 'https://www.blsspainmorocco.net');
+        // Envoyer un message à l'iframe (avec le bon domaine)
+        document.getElementById('myIframe').onload = function() {
+            document.getElementById('myIframe').contentWindow.postMessage('Hello from parent page', 'https://www.blsspainmorocco.net');
+        };
     </script>
 </body>
 </html>
